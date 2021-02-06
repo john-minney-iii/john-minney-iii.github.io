@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Module 1 | Table Data</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    </head>
+    <body>
+
+        <canvas id="myChart" width="800" height="400"></canvas>
+        
+        <script>
+
+            graphResults("src/data/ZonAnn.Ts+dSST.csv");
+
+            async function fetchCSVData(csvPath) {
+                const res = await fetch(csvPath);
+                const data = await res.text();
+
+                const years = [];
+                const temps = [];
+
+                const table = data.split(/\n/).slice(1);
+                table.forEach(row => {
+                    const col = row.split(',');
+                    const year = col[0];
+                    years.push(year);
+                    const temp = col[1];
+                    temps.push(parseFloat(temp) + 14);
+                });
+                return { years, temps };
+            };
+
+            async function graphResults(csvPath) {
+                const data = await fetchCSVData(csvPath);
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.years,
+                        datasets: [{
+                            label: 'Combined Land-Surface Air and Sea-Surface Water Temperature in C°',
+                            data: data.temps,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        callback: function(value, index, values) {
+                                            return value + "°";
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                });
+            }
+
+        </script>
+
+
+    </body>
+</html>

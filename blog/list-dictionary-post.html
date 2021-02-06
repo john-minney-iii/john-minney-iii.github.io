@@ -1,0 +1,166 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CS301 | Assignment 2 Post</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/blog/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="assets/css/blog.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+        </div>
+      </header>
+
+      <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4 font-italic">CS301 Assignment 2</h1>
+          <p class="lead my-3">Benchmarking different list and dictionary functions in Python.</p>
+        </div>
+      </div>
+
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8 blog-main">
+            <hr>
+          
+          <div class="blog-post">
+            <h2 class="blog-post-title">Report Write-up</h2>
+            <p class="blog-post-meta">February 5, 2021 by <a href="../index.html">John Minney III</a></p>
+
+            <p>Though it may not seem like it to human eyes Python dictionaries are much faster than its cousin, the list. Or at least that’s what the documentation says, but how much faster is it really?</p>
+            <hr>
+            <p>Dictionaries are Python’s version of a map. These un-ordered collections hold key and value pairs and allow the developer to search using a key, which means they implement a hash table. A hash table stores the values in an array and then the hash table maps the key to a hash value, and then to the index of its value in the array. While lists are an ordered collection that you have to iterate element-to-element to find the value you are looking for.</p>
+            <p>Dictionaries aren’t only faster when it comes to searching, they are speedy when inserting and deleting elements too. This is because the dictionary is unordered while the list is ordered. When deleting an element of a list all other elements have to <em>shift</em> to fill the now empty spaces.</p>
+            <p>I wrote a python script to test these statements while allowing me to visually see the outcome of each benchmark. The script is designed to place each collection size and benchmark time in a csv file to then be turned into a line graph. You can find the source code for this project in the <em>Archives</em> section.</p>
+            <h2 style="margin-bottom:10px;">Original Outcomes</h2>
+
+            <canvas class="dataChart" id="append_chart"></canvas>
+            <canvas class="dataChart" id="end_del_chart"></canvas>
+            <canvas class="dataChart" id="start_add_chart"></canvas>
+            <canvas class="dataChart" id="start_del_chart"></canvas>
+            <canvas class="dataChart" id="mid_add_chart"></canvas>
+            <canvas class="dataChart" id="mid_del_chart"></canvas>
+            <canvas class="dataChart" id="list_in_chart"></canvas>
+            <canvas class="dataChart" id="dict_add_chart"></canvas>
+            <canvas class="dataChart" id="dict_del_chart"></canvas>
+            <canvas class="dataChart" id="dict_in_chart"></canvas>
+
+            <h2>Issues</h2>
+
+          </div><!-- /.blog-post -->
+
+        </div><!-- /.blog-main -->
+
+        <aside class="col-md-4 blog-sidebar">
+          <div class="p-3 mb-3 bg-light rounded">
+            <h4 class="font-italic">About</h4>
+            <p class="mb-0">Experimentally determine the running time of list and dictionary operations in Python. At a minimum, determine the running time of inserting and deleting elements form the beginning, middle, and end of different length lists, and of determining if an element is in a list. Likewise, adding and deleting items to and from a dicitonary, and determining if an element is in a dicitonary.</p>
+          </div>
+
+          <div id="archives" class="p-3">
+            <h4 class="font-italic">Archives</h4>
+            <ol class="list-unstyled mb-0">
+                <li><a href="https://github.com/john-minney-iii/CS301-Algo-and-datastructures/blob/master/CS301-Assignment-2/assignment2.py">Source Code</a></li>
+            </ol>
+          </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </main><!-- /.container -->
+
+    <script>
+      const append_data = 'assets/data/list_append.csv';
+      const end_del_data = 'assets/data/list_end_del.csv';
+      const beg_add_data = 'assets/data/list_start_add.csv';
+      const beg_del_data = 'assets/data/list_start_del.csv';
+      const mid_add_data = 'assets/data/list_middle_add.csv';
+      const mid_del_data = 'assets/data/list_start_del.csv';
+      const list_in_data = 'assets/data/list_in.csv';
+
+      const dict_add_data = 'assets/data/dict_add.csv';
+      const dict_del_data = 'assets/data/dict_del.csv';
+      const dict_in_data = 'assets/data/dict_in.csv';
+
+      graphResults(append_data, 'append_chart', 'Run Times of List Append', 'rgba(255, 99, 132)');
+      graphResults(end_del_data, 'end_del_chart', 'Run Times of List End Delete', 'rgb(0, 204, 255)');
+      graphResults(beg_add_data, 'start_add_chart', 'Run Times of List Start Add', 'rgb(0, 255, 0)');
+      graphResults(beg_del_data, 'start_del_chart', 'Run Times of List Begging Delete', 'rgb(255, 0, 255)');
+      graphResults(mid_add_data, 'mid_add_chart', 'Run Times of List Middle Add', 'rgb(0, 0, 204)');
+      graphResults(mid_del_data, 'mid_del_chart', 'Run Times of List Middle Delete', 'rgb(0, 102, 102)');
+      graphResults(list_in_data, 'list_in_chart', 'Run time of List Search', 'rgb(255, 255, 0)');
+
+      graphResults(dict_add_data, 'dict_add_chart', 'Run Times of Dictionary Add', 'rgb(102, 0, 204)');
+      graphResults(dict_del_data, 'dict_del_chart', 'Run Times of Dictionary Delete', 'rgb(255, 0, 0)');
+      graphResults(dict_in_data, 'dict_in_chart', 'Run Times of Dictionary Search', 'rgb(102, 255, 51)');
+
+      async function fetchCSVData(csvPath) {
+          const res = await fetch(csvPath);
+          const data = await res.text();
+
+          const benchmarks = [];
+          const sizes = [];
+
+          const table = data.split(/\n/).slice(1);
+          table.forEach(row => {
+              const col = row.split(',');
+              const size = col[0];
+              sizes.push(size);
+              const benchmark = col[1];
+              benchmarks.push(parseFloat(benchmark));
+          });
+          return { benchmarks, sizes };
+      };
+
+      async function graphResults(csvPath, chartName, title, color) {
+          const data = await fetchCSVData(csvPath);
+          var ctx = document.getElementById(chartName).getContext('2d');
+          var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: data.sizes,
+                  datasets: [{
+                      label: title,
+                      data: data.benchmarks,
+                      backgroundColor: color,
+                      borderColor: color,
+                      borderWidth: 1,
+                      fill: false
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [
+                          {
+                              ticks: {
+                                  callback: function(value, index, values) {
+                                      return value + "s";
+                                  }
+                              }
+                          }
+                      ]
+                  }
+              }
+          });
+      }
+    </script>
+
+
+  </body>
+</html>

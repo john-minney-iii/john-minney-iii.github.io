@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Module 1 | Fetching Img</title>
+    </head>
+    <body>
+
+        <img src="" id="bear" width="500"/>
+
+        <script>
+            console.log('Fetching Bear');
+            fetchBear().catch(error => {
+                console.log('Error Fetching Bear!');
+                console.error(error);
+            });
+
+            async function fetchBear() {
+                const res = await fetch('src/img/bear.jpg');
+                const blob = await res.blob()
+                document.getElementById('bear').src = URL.createObjectURL(blob);
+            }
+
+        </script>
+
+    </body>
+</html>
