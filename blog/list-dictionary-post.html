@@ -49,8 +49,8 @@
             <p>Dictionaries are Python’s version of a map. These un-ordered collections hold key and value pairs and allow the developer to search using a key, which means they implement a hash table. A hash table stores the values in an array and then the hash table maps the key to a hash value, and then to the index of its value in the array. While lists are an ordered collection that you have to iterate element-to-element to find the value you are looking for.</p>
             <p>Dictionaries aren’t only faster when it comes to searching, they are speedy when inserting and deleting elements too. This is because the dictionary is unordered while the list is ordered. When deleting an element of a list all other elements have to <em>shift</em> to fill the now empty spaces.</p>
             <p>I wrote a python script to test these statements while allowing me to visually see the outcome of each benchmark. The script is designed to place each collection size and benchmark time in a csv file to then be turned into a line graph. You can find the source code for this project in the <em>Archives</em> section.</p>
-            <h2 style="margin-bottom:10px;">Original Outcomes</h2>
-
+            <h2 style="margin-bottom:10px;">Outcomes in Graph Form</h2>
+            <p>You can hover your mouse over a datapoint to see specific numbers.</p>
             <canvas class="dataChart" id="append_chart"></canvas>
             <canvas class="dataChart" id="end_del_chart"></canvas>
             <canvas class="dataChart" id="start_add_chart"></canvas>
@@ -62,8 +62,15 @@
             <canvas class="dataChart" id="dict_del_chart"></canvas>
             <canvas class="dataChart" id="dict_in_chart"></canvas>
 
-            <h2>Issues</h2>
-
+            <h2>Findings</h2>
+            <p>Though it is important information, it wouldn’t be fair to compare a dictionary and list with inserting and deleting data. So, the best test to compare them would be searching. Looking at the two graphs concerning searching. For the list:</p>
+            <p>To get a more accurate reading I had to use extremely large list sizes since my computer is quicker than normal laptops. As you can see the graph “jumps” a lot. Chances are these wild datapoints are from the computer hardware rather than the software itself.</p>
+            <p>For the dictionary almost all the tests happened instantly. The only outlier was a random jump in time, but this was probably due to garbage collection while it was cleaning out the memory.</p>
+            <hr>
+            <h2>Conclusion</h2>
+            <p>After running all the tests, it is safe to assume that dictionaries are much faster than lists. However, they take up a lot more space. Dictionaries won’t always work for what we want. For example, there are many situations where a two-dimensional list is needed. Though you might be able to hack a two-dimensional dictionary together it would take up more space than time it would save.</p>
+            <p>If the use case fits what a dictionary could do intelligently, they would be great to use. But that is only because a dictionary is just a lookup instead of an iteration. If you are just holding things such as user information, they would work the best.</p>
+            <p>For the most part developers need a quick way to hold multiple data points and lists work a lot better than dictionaries. Even though dictionaries are quicker they take a little bit more to setup since you have to put in the keys and values.</p>
           </div><!-- /.blog-post -->
 
         </div><!-- /.blog-main -->
